@@ -4,9 +4,20 @@ import org.example.moves.Move;
 
 public class Slumpis implements Entity{
 
+    public String name;
+    public  int points;
+
+    public Slumpis(String name) {
+        this.name = name;
+        this.points = 0;
+    }
+    @Override
+    public int calculatePoints() {
+        return 0;
+    }
+
     @Override
     public int doMove() {
-        System.out.println("I make random moves");
         int random = (int)(Math.floor(Math.random() * 3)) + 1;
         if (random == 1){
             System.out.println("Slumpis used " + Move.ROCK);
@@ -19,5 +30,9 @@ public class Slumpis implements Entity{
             return 3;
         }
         return 0;
+    }
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

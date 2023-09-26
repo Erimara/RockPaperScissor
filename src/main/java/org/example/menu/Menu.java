@@ -1,19 +1,18 @@
 package org.example.menu;
 
-import org.example.entities.AddPlayer;
-import org.example.entities.Player;
-import org.example.logic.SelectOpponent;
-import org.example.utils.PlayerList;
+import org.example.player.AddPlayer;
+import org.example.utils.data.PlayerPoints;
+import org.example.utils.data.Statistics;
 
 import java.util.Scanner;
 public class Menu {
 
     AddPlayer addPlayer = new AddPlayer();
-    PlayerList playerList = new PlayerList();
+    PlayerPoints playerList = new PlayerPoints();
     public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Welcome, what would you like to do today?");
+            System.out.println("Select an option");
             System.out.println("""
                     1: Play game
                     2: Create your player
@@ -32,8 +31,7 @@ public class Menu {
     public void options(int choice){
         switch (choice) {
             case 1 -> {
-                SelectOpponent selectOpponent = new SelectOpponent();
-                selectOpponent.startGame();
+                StartGame.checkIfExist(addPlayer.getPlayerList());
             }
 
             case 2 -> {
@@ -44,7 +42,7 @@ public class Menu {
 
             }
             case 4 -> {
-
+                Statistics.showPoints(addPlayer.getPlayerList());
             }
             case 5 -> {
                 playerList.getPlayerName(addPlayer.getPlayerList());
