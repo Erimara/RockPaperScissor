@@ -1,9 +1,6 @@
 package org.example.logic;
 
-import org.example.entities.Entity;
-import org.example.entities.Klockis;
-import org.example.entities.Namnis;
-import org.example.entities.Slumpis;
+import org.example.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +9,7 @@ import java.util.Scanner;
 public class SelectOpponent {
     public void startGame() {
         Scanner scanner = new Scanner(System.in);
-        List<Entity> entities = new ArrayList<>();
+        List<EntityMove> entities = new ArrayList<>();
 
         System.out.println("""
                 Select an opponent:
@@ -23,18 +20,18 @@ public class SelectOpponent {
         int choice = scanner.nextInt();
 
         if (choice == 1) {
-            Entity entity = new Klockis("Klockis");
-            entities.add(entity);
+            EntityMove entityMove = new Klockis("Klockis", new KlockisBehaviour());
+            entities.add(entityMove);
         } else if (choice == 2) {
-            Entity entity = new Namnis("Namnis");
-            entities.add(entity);
+            EntityMove entityMove = new Namnis("Namnis", new NamnisBehaviour());
+            entities.add(entityMove);
         } else if (choice == 3) {
-            Entity entity = new Slumpis("Slumpis");
-            entities.add(entity);
+            EntityMove entityMove = new Slumpis("Slumpis", new SlumpisBehaviour());
+            entities.add(entityMove);
         }
 
-        for (Entity entity : entities) {
-            RockPaperScissor rockPaperScissor = new RockPaperScissor(entity);
+        for (EntityMove entityMove : entities) {
+            RockPaperScissor rockPaperScissor = new RockPaperScissor(entityMove);
             rockPaperScissor.rockPaperScissor();
         }
     }

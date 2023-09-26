@@ -1,24 +1,23 @@
 package org.example.logic;
 
-import org.example.entities.Entity;
+import org.example.entities.EntityMove;
 import org.example.player.AddPlayer;
 import org.example.player.Player;
-import org.example.player.PlayerMove;
 import org.example.utils.ReturnToMenu;
 import org.example.utils.data.PlayerPoints;
 
 import java.util.Scanner;
 
 public class RockPaperScissor implements StartGame {
-    private Entity entity;
+    private EntityMove entityMove;
     private Player player;
     private int computerWins = 0;
     private int playerWins = 0;
     private Rounds rounds = new Rounds();
     AddPlayer addPlayer = new AddPlayer();
 
-    public RockPaperScissor(Entity entity) {
-        this.entity = entity;
+    public RockPaperScissor(EntityMove entityMove) {
+        this.entityMove = entityMove;
         this.player = player;
     }
 
@@ -70,7 +69,7 @@ public class RockPaperScissor implements StartGame {
         int choice = scanner.nextInt();
         int playerMove = Player.move(choice);
 
-        int computerMove = entity.doMove();
+        int computerMove = entityMove.doMove();
 
         if (playerMove == computerMove) {
             System.out.println("Draw");

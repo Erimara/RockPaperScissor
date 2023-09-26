@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Player {
 
     public String name;
-    public int points;
+    public int wins;
 
     public static int move(int move) {
         Scanner scanner = new Scanner(System.in);
@@ -25,9 +25,9 @@ public class Player {
         return 0;
     }
 
-    public Player(String name, int points) {
+    public Player(String name, int wins) {
         this.name = name;
-        this.points = points;
+        this.wins = wins;
     }
 
 
@@ -40,12 +40,12 @@ public class Player {
 
     }
     public void incrementPoints(int pointsToAdd) {
-        this.points += pointsToAdd;
+        this.wins += pointsToAdd;
     }
 
     // Method to get the player's current points
-    public int getPoints() {
-        return this.points;
+    public int getWins() {
+        return this.wins;
     }
 
     public String getName(){

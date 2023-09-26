@@ -5,36 +5,19 @@ import org.example.player.Player;
 
 import java.util.List;
 
-public class Namnis implements Entity{
+public class Namnis implements EntityMove{
 
-    AddPlayer addPlayer = new AddPlayer();
     public String name;
-    public  int points;
-
-    public Namnis(String name) {
+    public  int wins;
+private EntityMove move;
+    public Namnis(String name, EntityMove move) {
         this.name = name;
-        this.points = 0;
+        this.wins = 0;
+        this.move = move;
     }
+
     @Override
     public int doMove() {
-        System.out.println("I make my move depending on your name");
-        getPlayerName(addPlayer.getPlayerList());
-        return 0;
-    }
-    public int getPlayerName(List<Player> playerList){
-        for (Player player : playerList){
-            System.out.println(player.name);
-        }
-        return 0;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public int calculatePoints() {
-        return 0;
+      return move.doMove();
     }
 }
