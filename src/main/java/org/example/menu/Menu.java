@@ -1,14 +1,11 @@
 package org.example.menu;
 
-import org.example.player.AddPlayer;
-import org.example.utils.data.PlayerPoints;
-import org.example.utils.data.Statistics;
+import org.example.data.History;
+import org.example.entities.player.AddPlayer;
 
 import java.util.Scanner;
 public class Menu {
 
-    AddPlayer addPlayer = new AddPlayer();
-    PlayerPoints playerList = new PlayerPoints();
     public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -31,21 +28,20 @@ public class Menu {
     public void options(int choice){
         switch (choice) {
             case 1 -> {
-                StartGame.checkIfExist(addPlayer.getPlayerList());
+                StartGame.checkIfExist(AddPlayer.getInstance().getPlayerList());
             }
 
             case 2 -> {
-                addPlayer.createPlayer();
+                AddPlayer.getInstance().createPlayer();
             }
 
             case 3 -> {
-
+               History.getInstance().displayHistory();
             }
             case 4 -> {
-                Statistics.showPoints(addPlayer.getPlayerList());
+
             }
             case 5 -> {
-                playerList.getPlayerName(addPlayer.getPlayerList());
 
             }
             default -> System.out.println("Invalid choice");

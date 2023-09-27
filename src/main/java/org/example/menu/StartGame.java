@@ -1,7 +1,7 @@
 package org.example.menu;
 
 import org.example.logic.SelectOpponent;
-import org.example.player.Player;
+import org.example.entities.player.Player;
 import org.example.utils.ReturnToMenu;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class StartGame {
                 ReturnToMenu.returnToMainMenu();
             } else {
                 SelectOpponent selectOpponent = new SelectOpponent();
-                selectOpponent.startGame();
+                selectOpponent.opponentSelection();
             }
     }
 }

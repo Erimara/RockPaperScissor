@@ -1,15 +1,16 @@
 package org.example.logic;
 
-import org.example.entities.*;
+import org.example.entities.opponent.AllOpponents;
+import org.example.entities.Opponent;
+import org.example.entities.player.AddPlayer;
+import org.example.entities.player.PlayerMethods;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class SelectOpponent {
-    public void startGame() {
+    private AllOpponents allOpponents = new AllOpponents();
+    public void opponentSelection() {
         Scanner scanner = new Scanner(System.in);
-        List<EntityMove> entities = new ArrayList<>();
 
         System.out.println("""
                 Select an opponent:
@@ -19,20 +20,22 @@ public class SelectOpponent {
 
         int choice = scanner.nextInt();
 
+        Opponent selectedOpponent = null;
+        PlayerMethods currentPlayer = AddPlayer.getInstance().getCurrentPlayer();
+
         if (choice == 1) {
-            EntityMove entityMove = new Klockis("Klockis", new KlockisBehaviour());
-            entities.add(entityMove);
+            selectedOpponent = allOpponents.getOpponents().get(0);
         } else if (choice == 2) {
-            EntityMove entityMove = new Namnis("Namnis", new NamnisBehaviour());
-            entities.add(entityMove);
+            selectedOpponent = allOpponents.getOpponents().get(1);
         } else if (choice == 3) {
-            EntityMove entityMove = new Slumpis("Slumpis", new SlumpisBehaviour());
-            entities.add(entityMove);
+            selectedOpponent = allOpponents.getOpponents().get(2);
         }
 
-        for (EntityMove entityMove : entities) {
-            RockPaperScissor rockPaperScissor = new RockPaperScissor(entityMove);
-            rockPaperScissor.rockPaperScissor();
+        if (selectedOpponent != null) {
+            RockPaperScissor rockPaperScissor = new RockPaperScissor(selectedOpponent, currentPlayer);
+            rockPaperScissor.calculateWinner();
+        } else {
+            System.out.println("Invalid choice");
         }
     }
 }
