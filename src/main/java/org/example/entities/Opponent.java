@@ -1,6 +1,8 @@
 package org.example.entities;
 
+import org.example.moves.Move;
+
 public interface Opponent {
-    int doMove();
+    Move doMove();
     String getName();
 }

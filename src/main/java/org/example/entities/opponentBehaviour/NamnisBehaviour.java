@@ -17,24 +17,24 @@ public class NamnisBehaviour implements Opponent {
     }
 
     @Override
-    public int doMove() {
+    public Move doMove() {
         int random = (int)(Math.floor(Math.random() * 3)) + 1;
-        String name = AllOpponents.getInstance().getOpponents().get(1).getName();
+        String name = AllOpponents.getInstance().getOpponents().get(2).getName();
         if (random == 1){
             System.out.println(name + " used " + Move.ROCK);
-            return 1;
+            return Move.ROCK;
         } else if (random == 2) {
             System.out.println(name + " used " + Move.PAPER);
-            return 2;
+            return Move.PAPER;
         } else if (random == 3) {
             System.out.println(name + " used " + Move.SCISSOR);
-            return 3;
+            return Move.SCISSOR;
         }
-        return 0;
+        return null;
     }
     public int getPlayerName(List<Player> playerList){
         for (Player player : playerList){
-            System.out.println(player.name);
+            System.out.println(player.getName());
         }
         return 0;
     }

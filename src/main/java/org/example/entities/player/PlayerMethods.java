@@ -1,8 +1,10 @@
 package org.example.entities.player;
 
+import org.example.moves.Move;
+
 public interface PlayerMethods {
 
-    int doMove(int move);
+    Move doMove(int move);
     String getName();
 
 }

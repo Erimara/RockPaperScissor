@@ -1,12 +1,13 @@
 package org.example.entities.opponent;
 
 import org.example.entities.Opponent;
+import org.example.moves.Move;
 
 import java.time.LocalDate;
 
 public class Klockis implements Opponent {
     private LocalDate date;
-    public String name;
+    private String name;
 
     private Opponent move;
     public Klockis(String name, Opponent move) {
@@ -20,7 +21,7 @@ public class Klockis implements Opponent {
     }
 
     @Override
-    public int doMove() {
+    public Move doMove() {
         return move.doMove();
     }
 }

@@ -34,7 +34,7 @@ public class AddPlayer {
                     playerList.remove(currentPlayer);
                     currentPlayer = new Player(name, playerBehaviour);
                     playerList.add(currentPlayer);
-                    System.out.println("New player: " + currentPlayer.name + " created");
+                    System.out.println("New player: " + currentPlayer.getName() + " created");
                 } else if (replaceChoice == 2) {
                     System.out.println("Player creation canceled.");
                 } else {
@@ -43,7 +43,7 @@ public class AddPlayer {
             } else {
                 currentPlayer = new Player(name,playerBehaviour);
                 playerList.add(currentPlayer);
-                System.out.println("Player: " + currentPlayer.name + " created");
+                System.out.println("Player: " + currentPlayer.getName() + " created");
                 System.out.println("Number of players: " + playerList.size());
             }
 

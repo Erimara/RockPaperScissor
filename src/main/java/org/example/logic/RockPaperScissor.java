@@ -3,8 +3,9 @@ package org.example.logic;
 import org.example.data.History;
 import org.example.entities.Opponent;
 import org.example.entities.player.PlayerMethods;
+import org.example.moves.Move;
 import org.example.utils.ReturnToMenu;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,9 +15,8 @@ public class RockPaperScissor implements StartGame {
     private PlayerMethods currentPlayer;
     private int opponentWins = 0;
     private int playerWins = 0;
-    private List<Integer> playerMoves = new ArrayList<>();
-    private List<Integer> opponentMoves = new ArrayList<>();
-
+    private List<Move> playerMoves = new ArrayList<>();
+    private List<Move> opponentMoves = new ArrayList<>();
     public RockPaperScissor(Opponent opponent, PlayerMethods currentPlayer) {
         this.opponent = opponent;
         this.currentPlayer = currentPlayer;
@@ -36,33 +36,31 @@ public class RockPaperScissor implements StartGame {
                 3: Scissor""");
         int choice = scanner.nextInt();
 
-        int playerMove = currentPlayer.doMove(choice);
-
-        int opponentMove = opponent.doMove();
+        Move playerMove = currentPlayer.doMove(choice);
+        Move opponentMove = opponent.doMove();
         opponentMoves.add(opponentMove);
         playerMoves.add(playerMove);
-        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
-        // opponentMove, playerMove
-        if (playerMove == opponentMove) {
-            System.out.println("Draw");
-        }
 
-        if ((playerMove == 1 && opponentMove == 2) ||
-                (playerMove == 2 && opponentMove == 3) ||
-                (playerMove == 3 && opponentMove == 1)) {
-            System.out.println(opponentName + "wins the round");
-            History.getInstance().history();
-            opponentWins++;
-        } else {
-            System.out.println("Player wins the round");
-            History.getInstance().history();
+        if (playerMove.equals(opponentMove)) {
+            System.out.println("Draw");
+        } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
+                (playerMove == Move.PAPER && opponentMove == Move.ROCK) ||
+                (playerMove == Move.SCISSOR && opponentMove == Move.PAPER)) {
+            System.out.println(playerName + " wins the round");
             playerWins++;
+        } else if ((opponentMove == Move.ROCK && playerMove == Move.SCISSOR) ||
+                (opponentMove == Move.PAPER && playerMove == Move.ROCK) ||
+                (opponentMove == Move.SCISSOR && playerMove == Move.PAPER)) {
+            System.out.println(opponentName + " wins the round");
+            opponentWins++;
         }
     }
     @Override
     public void calculateWinner() {
         Scanner scanner = new Scanner(System.in);
         String opponentName = opponent.getName();
+        String playerName = currentPlayer.getName();
+
         int playerScore = 0;
         int opponentScore = 0;
         System.out.println("How many rounds would you like to play?");
@@ -76,23 +74,28 @@ public class RockPaperScissor implements StartGame {
                 System.out.println("ROUND " + i + "!");
                 rockPaperScissorLogic();
                 if (i == numOfRounds) {
+
                     if (opponentWins > playerWins) {
                         System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
                         opponentScore++;
                         History.getInstance().addTotalScore(opponentName, opponentScore);
+                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
                         ReturnToMenu.returnToMainMenu();
                     }
                     if (playerWins > opponentWins) {
                         System.out.println("Player wins: " + playerWins + "-" + opponentWins);
                         playerScore++;
-                        History.getInstance().addTotalScore("Player", playerScore);
+                        History.getInstance().addTotalScore(playerName, playerScore);
+                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
                         ReturnToMenu.returnToMainMenu();
                     }
                     if (playerWins == opponentWins) {
                         System.out.println("DRAW : " + playerWins + "-" + opponentWins);
+                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+                        History.getInstance().addTotalScore("Draw".toUpperCase(), 0);
                         ReturnToMenu.returnToMainMenu();
                     }
-                    System.out.println("Total wins ");
+
                 }
             }
         } else if (confirmRounds == 2) {
