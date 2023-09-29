@@ -5,7 +5,6 @@ import org.example.entities.Opponent;
 import org.example.entities.player.PlayerMethods;
 import org.example.moves.Move;
 import org.example.utils.ReturnToMenu;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,17 +16,14 @@ public class RockPaperScissor implements StartGame {
     private int playerWins = 0;
     private List<Move> playerMoves = new ArrayList<>();
     private List<Move> opponentMoves = new ArrayList<>();
+
     public RockPaperScissor(Opponent opponent, PlayerMethods currentPlayer) {
         this.opponent = opponent;
         this.currentPlayer = currentPlayer;
     }
 
-
-    public void rockPaperScissorLogic() {
+    private void rockPaperScissor() {
         Scanner scanner = new Scanner(System.in);
-        String opponentName = opponent.getName();
-        String playerName = currentPlayer.getName();
-
 
         System.out.println("""
                 Make your move!
@@ -40,20 +36,23 @@ public class RockPaperScissor implements StartGame {
         Move opponentMove = opponent.doMove();
         opponentMoves.add(opponentMove);
         playerMoves.add(playerMove);
-
+        determineWinner(playerMove,opponentMove);
+    }
+    public void determineWinner(Move playerMove, Move opponentMove) {
         if (playerMove.equals(opponentMove)) {
             System.out.println("Draw");
         } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
                 (playerMove == Move.PAPER && opponentMove == Move.ROCK) ||
                 (playerMove == Move.SCISSOR && opponentMove == Move.PAPER)) {
-            System.out.println(playerName + " wins the round");
             playerWins++;
+            currentPlayer.getName();
         } else if ((opponentMove == Move.ROCK && playerMove == Move.SCISSOR) ||
                 (opponentMove == Move.PAPER && playerMove == Move.ROCK) ||
                 (opponentMove == Move.SCISSOR && playerMove == Move.PAPER)) {
-            System.out.println(opponentName + " wins the round");
             opponentWins++;
+            opponent.getName();
         }
+
     }
     @Override
     public void calculateWinner() {
@@ -72,7 +71,9 @@ public class RockPaperScissor implements StartGame {
         if (confirmRounds == 1) {
             for (int i = 1; i <= numOfRounds; i++) {
                 System.out.println("ROUND " + i + "!");
-                rockPaperScissorLogic();
+
+                rockPaperScissor(); // Calling RPS rules
+
                 if (i == numOfRounds) {
 
                     if (opponentWins > playerWins) {
@@ -87,6 +88,7 @@ public class RockPaperScissor implements StartGame {
                         playerScore++;
                         History.getInstance().addTotalScore(playerName, playerScore);
                         History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+                        History.getInstance().playerWinsAgainstOpponent(playerName, opponentName);
                         ReturnToMenu.returnToMainMenu();
                     }
                     if (playerWins == opponentWins) {
@@ -95,11 +97,11 @@ public class RockPaperScissor implements StartGame {
                         History.getInstance().addTotalScore("Draw".toUpperCase(), 0);
                         ReturnToMenu.returnToMainMenu();
                     }
-
                 }
             }
         } else if (confirmRounds == 2) {
             ReturnToMenu.returnToMainMenu();
         }
     }
+
 }

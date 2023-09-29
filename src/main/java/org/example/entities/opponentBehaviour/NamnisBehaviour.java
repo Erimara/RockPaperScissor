@@ -19,7 +19,7 @@ public class NamnisBehaviour implements Opponent {
     @Override
     public Move doMove() {
         int random = (int)(Math.floor(Math.random() * 3)) + 1;
-        String name = AllOpponents.getInstance().getOpponents().get(2).getName();
+        String name = AllOpponents.getInstance().getOpponents().get(1).getName();
         if (random == 1){
             System.out.println(name + " used " + Move.ROCK);
             return Move.ROCK;

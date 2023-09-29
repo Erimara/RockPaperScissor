@@ -39,7 +39,7 @@ public class Menu {
                History.getInstance().displayHistory();
             }
             case 4 -> {
-                    History.getInstance().displayStatistics();
+                    History.getInstance().displayAllStats();
             }
             case 5 -> {
 

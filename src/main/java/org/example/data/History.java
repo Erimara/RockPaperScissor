@@ -1,6 +1,5 @@
 package org.example.data;
 
-import org.example.entities.Opponent;
 import org.example.entities.opponent.AllOpponents;
 import org.example.entities.player.AddPlayer;
 import org.example.entities.player.Player;
@@ -14,14 +13,21 @@ public class History {
 
     private static final History instance = new History();
     private List<HashMap<String, List<Move>>> gameHistory = new ArrayList<>();
-    private HashMap<String,List<Integer>> totalScore = new HashMap<>();
+    private HashMap<String, List<Integer>> totalScore = new HashMap<>();
 
     private List<LocalDateTime> currentMatchDates = new ArrayList<>();
-    public static History getInstance(){
+
+    private HashMap<String, HashMap<String, Integer>> playerWinsAgainstOpponent = new HashMap<>();
+
+
+    private HashMap<String, Integer> winner = new HashMap<>();
+
+    public static History getInstance() {
         return instance;
     }
-    public void addTotalScore(String name, int score){
-        totalScore.computeIfAbsent(name, x-> new ArrayList<>()).add(score);
+
+    public void addTotalScore(String name, int score) {
+        totalScore.computeIfAbsent(name, x -> new ArrayList<>()).add(score);
     }
 
     public void startNewGame(String opponentName, String playerName, List<Move> opponentMoves, List<Move> playerMoves) {
@@ -47,16 +53,25 @@ public class History {
                     System.out.println("Game data:" + gameData);
                     System.out.println();
                 });
+        displayWinners();
+    }
 
+    private void displayWinners() {
         System.out.println("LIST OF WINNERS: ");
         totalScore.forEach((key, value) -> {
-            if (key.contains("Draw".toUpperCase())){
-                System.out.println("There has been " + value.size() + " draws");
+            if (key.contains("Draw".toUpperCase())) {
+                System.out.println("Draw: " + value.size());
             } else System.out.println(key + " has won " + value.size() + " times");
         });
-}
+    }
 
- public void displayStatistics() {
+    public void displayAllStats(){
+        displayStatsByPlayer();
+        //whoWon(winner);
+        displayStatsByOpponent();
+    }
+
+    public void displayStatsByPlayer() {
         Player currentPlayer = AddPlayer.getInstance().getCurrentPlayer();
         if (currentPlayer != null) {
             String currentPlayerName = currentPlayer.getName();
@@ -68,26 +83,40 @@ public class History {
                 int numPlayerWins = playerWins.size();
                 float winPercentage = (float) numPlayerWins / totalNumOfGames * 100;
 
-                System.out.println(currentPlayerName + " has won " + numPlayerWins + " times");
-                System.out.println("You have played " + totalNumOfGames + " games.");
-                System.out.println("Your win percentage is: " + winPercentage + "%");
+                System.out.println("Player " + currentPlayerName + " has won " + numPlayerWins + " times.");
+                System.out.println(currentPlayerName + " has played " + totalNumOfGames + " games.");
+                System.out.println("Your win percentage is: " + winPercentage + "%.");
             } else {
-                System.out.println(currentPlayerName + " has not won any games yet.");
+                System.out.println(currentPlayerName + " has not won any games yet.\n" +
+                        "Games played: " + totalNumOfGames);
             }
         } else {
             System.out.println("No available data");
         }
     }
-    public void displayStatsByOpponent(){
-        String klockis = AllOpponents.getInstance().getOpponents().get(0).getName();
-        String namnis = AllOpponents.getInstance().getOpponents().get(1).getName();
-        String slumpis = AllOpponents.getInstance().getOpponents().get(2).getName();
-
-        List<Integer> klockisWins = totalScore.get(klockis);
-        List<Integer> namnisWins = totalScore.get(namnis);
-        List<Integer> slumpisWins = totalScore.get(slumpis);
-        int totalNumOfGames = totalScore.values().stream().mapToInt(List::size).sum();
-
-        //int totalGamesSKlockis = totalScore.values().stream().filter(x ->).mapToInt(List::size).sum();
+    public void displayStatsByOpponent() {
+        String currentPlayer = AddPlayer.getInstance().getCurrentPlayer().getName();
+        displayPlayerWinsAgainstOpponents(currentPlayer);
     }
+
+
+    public void playerWinsAgainstOpponent(String playerName, String opponentName) {
+        playerWinsAgainstOpponent
+                .computeIfAbsent(playerName, x -> new HashMap<>())
+                .merge(opponentName, 1, Integer::sum);
+    }
+    public void displayPlayerWinsAgainstOpponents(String playerName) {
+        HashMap<String, Integer> playerWins = playerWinsAgainstOpponent.get(playerName);
+        if (playerWins != null) {
+            System.out.println("Wins by " + playerName + " against opponents:");
+            playerWins.forEach((opponent, wins) -> {
+                System.out.println(opponent + ": " + wins + " times");
+            });
+        } else {
+            System.out.println(playerName + " has not won against any opponents.");
+        }
+    }
+
 }
+
+
