@@ -2,15 +2,13 @@ package org.example.entities.opponentBehaviour;
 
 import org.example.entities.opponent.AllOpponents;
 import org.example.entities.Opponent;
-import org.example.entities.player.AddPlayer;
-import org.example.entities.player.Player;
+import org.example.entities.player.HandlePlayer;
 import org.example.moves.Move;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Timer;
 
 public class NamnisBehaviour implements Opponent {
-
-
     @Override
     public String getName() {
         return null;
@@ -18,24 +16,28 @@ public class NamnisBehaviour implements Opponent {
 
     @Override
     public Move doMove() {
-        int random = (int)(Math.floor(Math.random() * 3)) + 1;
+
         String name = AllOpponents.getInstance().getOpponents().get(1).getName();
-        if (random == 1){
+        String playerName = HandlePlayer.getInstance().getCurrentPlayer().getName();
+        if (playerName.length() < 4) {
             System.out.println(name + " used " + Move.ROCK);
             return Move.ROCK;
-        } else if (random == 2) {
+        } else if (playerName.startsWith("s")) {
             System.out.println(name + " used " + Move.PAPER);
             return Move.PAPER;
-        } else if (random == 3) {
+        } else if (playerName.contains("z")) {
             System.out.println(name + " used " + Move.SCISSOR);
             return Move.SCISSOR;
+        } else {
+
+            StringBuilder secondLetter = new StringBuilder();
+            for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
+                secondLetter.append(alphabet);
+            }
+
+            String newName =  playerName.replace("a", secondLetter.toString());
+            HandlePlayer.getInstance().getCurrentPlayer().setName(newName);
         }
         return null;
-    }
-    public int getPlayerName(List<Player> playerList){
-        for (Player player : playerList){
-            System.out.println(player.getName());
-        }
-        return 0;
     }
 }

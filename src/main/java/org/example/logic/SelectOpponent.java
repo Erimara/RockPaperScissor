@@ -2,7 +2,7 @@ package org.example.logic;
 
 import org.example.entities.opponent.AllOpponents;
 import org.example.entities.Opponent;
-import org.example.entities.player.AddPlayer;
+import org.example.entities.player.HandlePlayer;
 import org.example.entities.player.PlayerMethods;
 
 import java.util.Scanner;
@@ -21,7 +21,7 @@ public class SelectOpponent {
         int choice = scanner.nextInt();
 
         Opponent selectedOpponent = null;
-        PlayerMethods currentPlayer = AddPlayer.getInstance().getCurrentPlayer();
+        PlayerMethods currentPlayer = HandlePlayer.getInstance().getCurrentPlayer();
 
         if (choice == 1) {
             selectedOpponent = allOpponents.getOpponents().get(0);

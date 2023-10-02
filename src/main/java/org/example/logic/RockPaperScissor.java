@@ -1,6 +1,7 @@
 package org.example.logic;
 
-import org.example.data.History;
+import org.example.data.GameData;
+import org.example.data.SpecificStats;
 import org.example.entities.Opponent;
 import org.example.entities.player.PlayerMethods;
 import org.example.moves.Move;
@@ -36,9 +37,9 @@ public class RockPaperScissor implements StartGame {
         Move opponentMove = opponent.doMove();
         opponentMoves.add(opponentMove);
         playerMoves.add(playerMove);
-        determineWinner(playerMove,opponentMove);
+        gameRules(playerMove,opponentMove);
     }
-    public void determineWinner(Move playerMove, Move opponentMove) {
+    public void gameRules(Move playerMove, Move opponentMove) {
         if (playerMove.equals(opponentMove)) {
             System.out.println("Draw");
         } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
@@ -62,6 +63,7 @@ public class RockPaperScissor implements StartGame {
 
         int playerScore = 0;
         int opponentScore = 0;
+
         System.out.println("How many rounds would you like to play?");
         int numOfRounds = scanner.nextInt();
         System.out.println("You have chosen " + numOfRounds + " number of rounds\n" +
@@ -78,29 +80,39 @@ public class RockPaperScissor implements StartGame {
 
                     if (opponentWins > playerWins) {
                         System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
-                        opponentScore++;
-                        History.getInstance().addTotalScore(opponentName, opponentScore);
-                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+                        addData(2, playerName, playerScore,opponentName,opponentScore);
                         ReturnToMenu.returnToMainMenu();
                     }
                     if (playerWins > opponentWins) {
                         System.out.println("Player wins: " + playerWins + "-" + opponentWins);
-                        playerScore++;
-                        History.getInstance().addTotalScore(playerName, playerScore);
-                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
-                        History.getInstance().playerWinsAgainstOpponent(playerName, opponentName);
+                        addData(1, playerName, playerScore,opponentName,opponentScore);
                         ReturnToMenu.returnToMainMenu();
                     }
                     if (playerWins == opponentWins) {
-                        System.out.println("DRAW : " + playerWins + "-" + opponentWins);
-                        History.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
-                        History.getInstance().addTotalScore("Draw".toUpperCase(), 0);
+                        addData(3, playerName, playerScore,opponentName,opponentScore);
                         ReturnToMenu.returnToMainMenu();
                     }
                 }
             }
         } else if (confirmRounds == 2) {
             ReturnToMenu.returnToMainMenu();
+        }
+    }
+
+    public void addData(int playerOrOpponent, String playerName, int playerScore, String opponentName, int opponentScore){
+        if (playerOrOpponent == 1){
+            playerScore++;
+            GameData.getInstance().addTotalWins(playerName, playerScore);
+            GameData.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+            SpecificStats.getInstance().addPlayerWins(playerName, opponentName);
+        } else if (playerOrOpponent == 2) {
+            opponentScore++;
+            GameData.getInstance().addTotalWins(opponentName, opponentScore);
+            GameData.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+        } else if (playerOrOpponent == 3) {
+            System.out.println("DRAW : " + playerWins + "-" + opponentWins);
+            GameData.getInstance().startNewGame(opponentName, playerName, opponentMoves, playerMoves);
+            GameData.getInstance().addTotalWins("Draw".toUpperCase(), 0);
         }
     }
 

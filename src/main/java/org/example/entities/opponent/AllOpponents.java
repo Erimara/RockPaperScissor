@@ -12,7 +12,6 @@ public class AllOpponents {
     private static final AllOpponents instance = new AllOpponents();
     List<Opponent> entities = new ArrayList<>();
     public AllOpponents(){
-
         Opponent klockis = new Klockis("Klockis", new KlockisBehaviour());
         Opponent namnis = new Namnis("Namnis", new NamnisBehaviour());
         Opponent slumpis = new Slumpis("Slumpis", new SlumpisBehaviour());
@@ -20,7 +19,6 @@ public class AllOpponents {
         entities.add(namnis);
         entities.add(slumpis);
     }
-
     public static AllOpponents getInstance(){
         return instance;
     }

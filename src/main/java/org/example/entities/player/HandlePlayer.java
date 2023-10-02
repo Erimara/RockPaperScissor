@@ -1,18 +1,15 @@
 package org.example.entities.player;
 
-import org.example.entities.opponent.AllOpponents;
 import org.example.utils.ReturnToMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AddPlayer {
-
-    private static AddPlayer instance = new AddPlayer();
+public class HandlePlayer {
+    private static HandlePlayer instance = new HandlePlayer();
     Player currentPlayer;
     List<Player> playerList = new ArrayList<>();
-
     public void createPlayer() {
         Scanner scanner = new Scanner(System.in);
         PlayerBehaviour playerBehaviour = new PlayerBehaviour();
@@ -56,14 +53,11 @@ public class AddPlayer {
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
-
-    public List<Player> getPlayerList() {
-        return playerList;
+    public void setNewName(String name){
+        name = currentPlayer.getName();
     }
-
-    public static AddPlayer getInstance(){
+    public static HandlePlayer getInstance(){
         return instance;
     }
-
 
 }
