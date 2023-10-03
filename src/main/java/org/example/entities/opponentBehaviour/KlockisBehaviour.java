@@ -5,6 +5,7 @@ import org.example.entities.Opponent;
 import org.example.moves.Move;
 
 import java.time.LocalTime;
+import java.util.Calendar;
 
 public class KlockisBehaviour implements Opponent {
 
@@ -15,24 +16,27 @@ public class KlockisBehaviour implements Opponent {
 
     @Override
     public Move doMove() {
-        LocalTime time = java.time.LocalTime.now(); // current time
-        long milis = System.currentTimeMillis(); // curent time in milli
+        String name = AllOpponents.getInstance().getOpponents().get(0).getName();
+        Calendar calendar = Calendar.getInstance();
+        int seconds = calendar.get(Calendar.SECOND);
+        if(seconds == 55 || seconds == 15){
+            System.out.println(name + " used " + Move.ROCK);
+            return Move.ROCK;
+        }
+        for(int i = 1; i < 60; i++){
+            if (i % 2 == 0){
+                if (i == seconds){
+                    System.out.println(name + " used " + Move.PAPER);
+                    return Move.PAPER;
+                }
+            }  else {
+                if (i == seconds){
+                    System.out.println(name + " used " + Move.SCISSOR);
+                    return Move.SCISSOR;
+                }
 
-        // Skriv en funktion som skiftar mellan rock/paper/scissor var 10 sekund
-        System.out.println(milis);
-        System.out.println("I make my move depending on my date");
-            int random = (int)(Math.floor(Math.random() * 3)) + 1;
-            String name = AllOpponents.getInstance().getOpponents().get(0).getName();
-            if (random == 1){
-                System.out.println(name + " used " + Move.ROCK);
-                return Move.ROCK;
-            } else if (random == 2) {
-                System.out.println(name + " used " + Move.PAPER);
-                return Move.PAPER;
-            } else if (random == 3) {
-                System.out.println(name + " used " + Move.SCISSOR);
-                return Move.SCISSOR;
             }
+        }
             return null;
     }
 }

@@ -41,7 +41,6 @@ public class HandlePlayer {
                 currentPlayer = new Player(name,playerBehaviour);
                 playerList.add(currentPlayer);
                 System.out.println("Player: " + currentPlayer.getName() + " created");
-                System.out.println("Number of players: " + playerList.size());
             }
 
             if (confirm == 2) {
@@ -52,9 +51,6 @@ public class HandlePlayer {
 
     public Player getCurrentPlayer(){
         return currentPlayer;
-    }
-    public void setNewName(String name){
-        name = currentPlayer.getName();
     }
     public static HandlePlayer getInstance(){
         return instance;

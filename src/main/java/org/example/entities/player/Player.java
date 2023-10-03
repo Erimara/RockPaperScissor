@@ -14,14 +14,9 @@ public class Player implements PlayerMethods {
     public Move doMove(int move) {
      return playerBehaviour.doMove(move);
     }
-    public Player(String name) {
-        this.name = name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
-
     @Override
     public String getName(){
         return this.name;

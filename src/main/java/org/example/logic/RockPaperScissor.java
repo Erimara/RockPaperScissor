@@ -3,6 +3,7 @@ package org.example.logic;
 import org.example.data.GameData;
 import org.example.data.SpecificStats;
 import org.example.entities.Opponent;
+import org.example.entities.player.HandlePlayer;
 import org.example.entities.player.PlayerMethods;
 import org.example.moves.Move;
 import org.example.utils.ReturnToMenu;
@@ -17,7 +18,7 @@ public class RockPaperScissor implements StartGame {
     private int playerWins = 0;
     private List<Move> playerMoves = new ArrayList<>();
     private List<Move> opponentMoves = new ArrayList<>();
-
+    private String originalName = ""; // Saves original name to history/stats
     public RockPaperScissor(Opponent opponent, PlayerMethods currentPlayer) {
         this.opponent = opponent;
         this.currentPlayer = currentPlayer;
@@ -25,7 +26,6 @@ public class RockPaperScissor implements StartGame {
 
     private void rockPaperScissor() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("""
                 Make your move!
                 1: Rock
@@ -37,9 +37,11 @@ public class RockPaperScissor implements StartGame {
         Move opponentMove = opponent.doMove();
         opponentMoves.add(opponentMove);
         playerMoves.add(playerMove);
+
         gameRules(playerMove,opponentMove);
     }
     public void gameRules(Move playerMove, Move opponentMove) {
+
         if (playerMove.equals(opponentMove)) {
             System.out.println("Draw");
         } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
@@ -53,16 +55,12 @@ public class RockPaperScissor implements StartGame {
             opponentWins++;
             opponent.getName();
         }
-
     }
     @Override
-    public void calculateWinner() {
+    public void setRounds() {
         Scanner scanner = new Scanner(System.in);
-        String opponentName = opponent.getName();
-        String playerName = currentPlayer.getName();
-
-        int playerScore = 0;
-        int opponentScore = 0;
+        String resetPlayerName = currentPlayer.getName();
+        originalName = resetPlayerName;
 
         System.out.println("How many rounds would you like to play?");
         int numOfRounds = scanner.nextInt();
@@ -77,29 +75,36 @@ public class RockPaperScissor implements StartGame {
                 rockPaperScissor(); // Calling RPS rules
 
                 if (i == numOfRounds) {
-
-                    if (opponentWins > playerWins) {
-                        System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
-                        addData(2, playerName, playerScore,opponentName,opponentScore);
-                        ReturnToMenu.returnToMainMenu();
-                    }
-                    if (playerWins > opponentWins) {
-                        System.out.println("Player wins: " + playerWins + "-" + opponentWins);
-                        addData(1, playerName, playerScore,opponentName,opponentScore);
-                        ReturnToMenu.returnToMainMenu();
-                    }
-                    if (playerWins == opponentWins) {
-                        addData(3, playerName, playerScore,opponentName,opponentScore);
-                        ReturnToMenu.returnToMainMenu();
-                    }
+                    calculateWinner();
+                    currentPlayer.setName(resetPlayerName);
                 }
             }
         } else if (confirmRounds == 2) {
             ReturnToMenu.returnToMainMenu();
         }
     }
+    private void calculateWinner() {
+        String opponentName = opponent.getName();
 
-    public void addData(int playerOrOpponent, String playerName, int playerScore, String opponentName, int opponentScore){
+        int playerScore = 0;
+        int opponentScore = 0;
+        if (opponentWins > playerWins) {
+            System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
+            addData(2, originalName, playerScore,opponentName,opponentScore);
+            ReturnToMenu.returnToMainMenu();
+        }
+        if (playerWins > opponentWins) {
+            System.out.println("Player wins: " + playerWins + "-" + opponentWins);
+            addData(1, originalName, playerScore,opponentName,opponentScore);
+            ReturnToMenu.returnToMainMenu();
+        }
+        if (playerWins == opponentWins) {
+            addData(3, originalName, playerScore,opponentName,opponentScore);
+            ReturnToMenu.returnToMainMenu();
+        }
+    }
+
+    private void addData(int playerOrOpponent, String playerName, int playerScore, String opponentName, int opponentScore){
         if (playerOrOpponent == 1){
             playerScore++;
             GameData.getInstance().addTotalWins(playerName, playerScore);
@@ -115,5 +120,4 @@ public class RockPaperScissor implements StartGame {
             GameData.getInstance().addTotalWins("Draw".toUpperCase(), 0);
         }
     }
-
 }

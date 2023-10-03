@@ -1,5 +1,5 @@
 package org.example.logic;
 
 public interface StartGame {
-    void calculateWinner();
+    void setRounds();
 }

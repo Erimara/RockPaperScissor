@@ -23,19 +23,21 @@ public class SelectOpponent {
         Opponent selectedOpponent = null;
         PlayerMethods currentPlayer = HandlePlayer.getInstance().getCurrentPlayer();
 
-        if (choice == 1) {
-            selectedOpponent = allOpponents.getOpponents().get(0);
-        } else if (choice == 2) {
-            selectedOpponent = allOpponents.getOpponents().get(1);
-        } else if (choice == 3) {
-            selectedOpponent = allOpponents.getOpponents().get(2);
-        }
+            if (choice == 1) {
+                selectedOpponent = allOpponents.getOpponents().get(0);
+            } else if (choice == 2) {
+                selectedOpponent = allOpponents.getOpponents().get(1);
+            } else if (choice == 3) {
+                selectedOpponent = allOpponents.getOpponents().get(2);
+            }
 
         if (selectedOpponent != null) {
             RockPaperScissor rockPaperScissor = new RockPaperScissor(selectedOpponent, currentPlayer);
-            rockPaperScissor.calculateWinner();
+            rockPaperScissor.setRounds();
         } else {
             System.out.println("Invalid choice");
         }
+
     }
+
 }
