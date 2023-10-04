@@ -1,6 +1,5 @@
 package org.example.entities.opponent;
 
-import org.example.entities.Opponent;
 import org.example.moves.Move;
 
 public class Slumpis implements Opponent {
@@ -14,8 +13,6 @@ public class Slumpis implements Opponent {
         this.name = name;
         this.move = move;
     }
-
-
     @Override
     public Move doMove() {
         return move.doMove();

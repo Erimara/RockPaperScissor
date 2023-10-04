@@ -1,14 +1,13 @@
 package org.example.entities.opponent;
 
-import org.example.entities.Opponent;
-import org.example.entities.opponentBehaviour.KlockisBehaviour;
-import org.example.entities.opponentBehaviour.NamnisBehaviour;
-import org.example.entities.opponentBehaviour.SlumpisBehaviour;
+import org.example.entities.opponent.opponentBehaviour.KlockisBehaviour;
+import org.example.entities.opponent.opponentBehaviour.NamnisBehaviour;
+import org.example.entities.opponent.opponentBehaviour.SlumpisBehaviour;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllOpponents {
+public class AllOpponents{
     private static final AllOpponents instance = new AllOpponents();
     List<Opponent> entities = new ArrayList<>();
     public AllOpponents(){
@@ -23,6 +22,7 @@ public class AllOpponents {
         return instance;
     }
     public List<Opponent> getOpponents(){
+
         return entities;
+        }
     }
-}

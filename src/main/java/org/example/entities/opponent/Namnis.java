@@ -1,6 +1,5 @@
 package org.example.entities.opponent;
 
-import org.example.entities.Opponent;
 import org.example.moves.Move;
 
 public class Namnis implements Opponent {
@@ -11,12 +10,10 @@ private Opponent move;
         this.name = name;
         this.move = move;
     }
-
     @Override
     public String getName() {
         return name;
     }
-
     @Override
     public Move doMove() {
       return move.doMove();

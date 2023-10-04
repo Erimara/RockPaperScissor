@@ -1,10 +1,12 @@
 package org.example.data;
 
+import org.example.entities.player.HandlePlayer;
 import org.example.moves.Move;
 import org.example.utils.ReturnToMenu;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GameData {
@@ -16,7 +18,6 @@ public class GameData {
     public static GameData getInstance() {
         return instance;
     }
-
     public void addTotalWins(String name, int score) {
         totalWins.computeIfAbsent(name, x -> new ArrayList<>()).add(score);
     }
@@ -28,32 +29,16 @@ public class GameData {
         gameHistory.add(newGameHistory);
         currentMatchDates.add(LocalDateTime.now());
     }
-    public void displayHistory() {
-        IntStream.range(0, gameHistory.size())
-                .forEach(matchNumber -> {
-                    System.out.println("GAME: " + (matchNumber + 1));
-                    System.out.println("DATE: " + currentMatchDates.get(matchNumber) );
-                    System.out.println("USED MOVES: " + gameHistory.get(matchNumber));
-                });
-        displayWinners();
-        ReturnToMenu.returnToMainMenu();
+
+    public List<LocalDateTime>  getCurrentMatchDate(){
+        return currentMatchDates;
     }
-    private void displayWinners() {
-        System.out.println("WINNERS & DRAWS: ");
-        totalWins.forEach((key, value) -> {
-            if (key.contains("Draw".toUpperCase())) {
-                System.out.println("Draw: " + value.size());
-            } else System.out.println(key + " has won " + value.size() + " times");
-        });
-    }
+
+    public List<HashMap<String, List<Move>>> getgameHistory(){return  gameHistory;}
 
    public HashMap<String, List<Integer>> getTotalWins(){
         return totalWins;
    }
-
-
-
-
 }
 
 

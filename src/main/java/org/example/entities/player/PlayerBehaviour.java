@@ -2,11 +2,10 @@ package org.example.entities.player;
 
 import org.example.moves.Move;
 
-public class PlayerBehaviour implements PlayerMethods {
+public class PlayerBehaviour implements PlayerMoves {
     @Override
     public Move doMove(int move) {
         String name = HandlePlayer.getInstance().getCurrentPlayer().getName();
-
             if (move == 1) {
                 System.out.println(name + " used " + Move.ROCK);
                 return Move.ROCK;
@@ -19,12 +18,4 @@ public class PlayerBehaviour implements PlayerMethods {
             }
         return null;
     }
-    @Override
-    public String getName() {
-        return null;
-    }
-    @Override
-    public void setName(String name) {
-    }
-
 }

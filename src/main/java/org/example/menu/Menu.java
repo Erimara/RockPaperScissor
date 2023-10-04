@@ -1,9 +1,9 @@
 package org.example.menu;
 
 import org.example.data.GameData;
+import org.example.data.History;
 import org.example.data.SpecificStats;
 import org.example.entities.player.HandlePlayer;
-
 import java.util.Scanner;
 public class Menu {
     public void start() {
@@ -25,21 +25,21 @@ public class Menu {
     }
     public void options(int choice){
         switch (choice) {
-            case 1 -> {
-                StartGame.checkIfExist();
-            }
+            case 1 -> StartGame.checkIfExist();
 
-            case 2 -> {
-                HandlePlayer.getInstance().createPlayer();
-            }
+            case 2 -> HandlePlayer.getInstance().createPlayer();
 
-            case 3 -> {
-               GameData.getInstance().displayHistory();
-            }
+            case 3 -> History.getInstance().displayHistory(
+                    GameData.getInstance().getCurrentMatchDate(),
+                    GameData.getInstance().getgameHistory(),
+                    GameData.getInstance().getTotalWins()
+            );
+
             case 4 -> {
                 SpecificStats.getInstance().displayStatsByPlayer(GameData.getInstance().getTotalWins());
                 SpecificStats.getInstance().displayStatsByOpponent();
             }
+
             default -> System.out.println("Invalid choice");
         }
     }

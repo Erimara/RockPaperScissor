@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.entities.opponent;
 
 import org.example.moves.Move;
 

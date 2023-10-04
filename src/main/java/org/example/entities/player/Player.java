@@ -2,8 +2,7 @@ package org.example.entities.player;
 
 import org.example.moves.Move;
 
-public class Player implements PlayerMethods {
-
+public class Player implements PlayerMoves, PlayerName {
     PlayerBehaviour playerBehaviour;
     private String name;
     public Player(String name, PlayerBehaviour playerBehaviour) {
