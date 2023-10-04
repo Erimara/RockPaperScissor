@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class GameData {
+public class GameData implements IGameData {
 
     private static final GameData instance = new GameData();
     private List<HashMap<String, List<Move>>> gameHistory = new ArrayList<>();
@@ -30,12 +30,13 @@ public class GameData {
         currentMatchDates.add(LocalDateTime.now());
     }
 
+    @Override
     public List<LocalDateTime>  getCurrentMatchDate(){
         return currentMatchDates;
     }
-
+    @Override
     public List<HashMap<String, List<Move>>> getgameHistory(){return  gameHistory;}
-
+    @Override
    public HashMap<String, List<Integer>> getTotalWins(){
         return totalWins;
    }

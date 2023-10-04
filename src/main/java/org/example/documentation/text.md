@@ -75,14 +75,42 @@ logik hade respektive val kunnat kallas på. Det kändes däremot mer rörigt ä
 
 ### SOLID
 #### Single Responsibility Principle
+Denna Solid-princip är något jag använder hyfsat frekvent i mitt arbete.
+Den går ut på att en klass ska endast ha en uppgift. Genom detta kan man undvika buggar och det blir lättare att felsöka.
 
+Genomgående i arbetet har jag delat upp mina klasser så att de främst har en uppgift, detta kan vara
+ta emot data för att sedan visa datan i en annan klass. Detta går att se i package "data".
 #### Open-Closed Principle
+Även denna solid-princip har jag försökt följa i mitt arbete. Den handlar om att klasser
+ska vara öppna för extensioner men stängda för modifikationer.
 
+För att uppnå detta har jag följt encapsulation, polymorphism och delvis 
+lite inheritence, trots att jag inte ärver från någon specifik klass.
+
+Med hjälp av att koda mot interfaces i t ex "Player" och "Opponents" så har jag kunnat hålla klasserna stängda för modifikationer men öppna för extensioner.
 #### Liskov Substitution Principle
+Det Barbara Liskov kort sagt menade var att en subclass ska kunna vara utbytbar mot sin huvudklass.
+Detta är något jag inte har lyckats följa i mitt arbete. Jag har som tidigare sagt, kodat mott ett interface.
+Mina "opponent" objekt(Namnis,Slumpis,Klockis) är således av typen "Opponent" vilket är ett interface. 
 
+Det är svårt för mig att uppnå principen i mitt fall. Däremot hade jag kunnat uppnå den om jag skapat en Opponent klass,
+där alla olika opponents ärver från den. I denna huvudklassen hade jag t ex kunnat ha mina namn och moves, varpå subklasserna hade kunnat ärva dessa.
+Om jag sen hade försäkrat att alla mina subklasser kan göra exakt samma sak som min huvudklass så hade denna principen varit uppnådd.
+
+Detta är säkerligen något jag hade gjort om jag hade börjat om från början.
 #### Interface Segregation Principle
+När man använder sig av denna principen vill man dela upp sitt interface så mycket som möjligt.
+Exempel på detta är om man har ett interface för former, alla former är inte tre dimensionella, vilket betyder att olika uträckningar kan behöva göras, vilket
+i sin tur leder till olika metoder. 
+Poängen är att dela upp metoder i olika interfaces så metoder som ej används inte tar upp plats eller skapar buggar.
 
+Detta är något jag har försökt följa i  "Player". Jag hade alla mina metoder i ett interface först men tog sedan ur min metod för att hämna spelarens namn
+och implementerade den i ett seperat interface.
 #### Dependency Inversion Principle
+Den sistnämnda bokstaven i SOLID handlar om att klasser ska inte vara beroende på konkreta klasser
+utan istället ska de förlita sig på abstraherade klasser eller interfaces.
+
+Detta är något jag har upnått någorlunda då jag har försökt abstrahera så mycket som möjligt. Både genom att bryta ut i olika klasser samt skapa interfaces.
 
 
 ### Avslutande tankar
