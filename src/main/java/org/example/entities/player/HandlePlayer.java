@@ -48,7 +48,6 @@ public class HandlePlayer {
             }
         }
     }
-
     public Player getCurrentPlayer(){
         return currentPlayer;
     }

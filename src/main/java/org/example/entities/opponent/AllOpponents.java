@@ -22,7 +22,6 @@ public class AllOpponents{
         return instance;
     }
     public List<Opponent> getOpponents(){
-
         return entities;
-        }
+    }
     }

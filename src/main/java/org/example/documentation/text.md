@@ -110,7 +110,7 @@ och implementerade den i ett seperat interface.
 Den sistnämnda bokstaven i SOLID handlar om att klasser ska inte vara beroende på konkreta klasser
 utan istället ska de förlita sig på abstraherade klasser eller interfaces.
 
-Detta är något jag har upnått någorlunda då jag har försökt abstrahera så mycket som möjligt. Både genom att bryta ut i olika klasser samt skapa interfaces.
+Detta är något jag har uppnått någorlunda då jag har försökt abstrahera så mycket som möjligt. Både genom att bryta ut i olika klasser samt skapa interfaces.
 
 
 ### Avslutande tankar

@@ -10,7 +10,6 @@ import java.util.List;
 public class SpecificStats {
 
     private HashMap<String, HashMap<String, Integer>> playerWinsAgainstOpponent = new HashMap<>();
-
     private static final SpecificStats instance = new SpecificStats();
     public static SpecificStats getInstance() {
         return instance;

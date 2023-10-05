@@ -12,20 +12,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RockPaperScissor {
-    private Opponent opponent;
-    private PlayerMoves currentPlayer;
-    private PlayerName currentPlayerName;
+    private final Opponent opponent;
+    private final PlayerMoves currentPlayer;
+    private final PlayerName currentPlayerName;
     private int opponentWins = 0;
     private int playerWins = 0;
-    private List<Move> playerMoves = new ArrayList<>();
-    private List<Move> opponentMoves = new ArrayList<>();
+    private final List<Move> playerMoves = new ArrayList<>();
+    private final List<Move> opponentMoves = new ArrayList<>();
     private String originalName = ""; // Saves original name to history/stats
     public RockPaperScissor(Opponent opponent, PlayerMoves currentPlayer, PlayerName currentPlayerName) {
         this.opponent = opponent;
         this.currentPlayer = currentPlayer;
         this.currentPlayerName = currentPlayerName;
     }
-    private void rockPaperScissor() {
+    private void chooseMove() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
                 Make your move!
@@ -41,26 +41,9 @@ public class RockPaperScissor {
 
         gameRules(playerMove,opponentMove);
     }
-    public void gameRules(Move playerMove, Move opponentMove) {
-
-        if (playerMove.equals(opponentMove)) {
-            System.out.println("Draw");
-        } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
-                (playerMove == Move.PAPER && opponentMove == Move.ROCK) ||
-                (playerMove == Move.SCISSOR && opponentMove == Move.PAPER)) {
-            playerWins++;
-            currentPlayerName.getName();
-        } else if ((opponentMove == Move.ROCK && playerMove == Move.SCISSOR) ||
-                (opponentMove == Move.PAPER && playerMove == Move.ROCK) ||
-                (opponentMove == Move.SCISSOR && playerMove == Move.PAPER)) {
-            opponentWins++;
-            currentPlayerName.getName();
-        }
-    }
     public void setRounds() {
         Scanner scanner = new Scanner(System.in);
-        String resetPlayerName = currentPlayerName.getName();
-        originalName = resetPlayerName;
+        originalName = currentPlayerName.getName();;
 
         System.out.println("How many rounds would you like to play?");
         int numOfRounds = scanner.nextInt();
@@ -72,55 +55,36 @@ public class RockPaperScissor {
             for (int i = 1; i <= numOfRounds; i++) {
                 System.out.println("ROUND " + i + "!");
 
-                rockPaperScissor(); // Starts game
+                chooseMove(); // Starts game
 
                 if (i == numOfRounds) {
-                    calculateWinner();
-                    currentPlayerName.setName(resetPlayerName);
+                    WinnerData winnerData = new WinnerData(
+                            opponent,
+                            originalName,
+                            opponentMoves,
+                            playerMoves,
+                            playerWins,
+                            opponentWins
+                    );
+                    winnerData.calculateWinner();
+                    currentPlayerName.setName(originalName);
                 }
             }
         } else if (confirmRounds == 2) {
             ReturnToMenu.returnToMainMenu();
         }
     }
-    private void calculateWinner() {
-        String opponentName = opponent.getName();
-
-        int playerScore = 0;
-        int opponentScore = 0;
-        if (opponentWins > playerWins) {
-            System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
-            addData(2, originalName, playerScore,opponentName,opponentScore);
-            ReturnToMenu.returnToMainMenu();
-        }
-        if (playerWins > opponentWins) {
-            System.out.println("Player wins: " + playerWins + "-" + opponentWins);
-            addData(1, originalName, playerScore,opponentName,opponentScore);
-            ReturnToMenu.returnToMainMenu();
-        }
-        if (playerWins == opponentWins) {
-            addData(3, originalName, playerScore,opponentName,opponentScore);
-            ReturnToMenu.returnToMainMenu();
-        }
-    }
-
-    private void addData(int drawPlayerOpponent,
-                         String originalName, int playerScore,
-                         String opponentName, int opponentScore){
-
-        if (drawPlayerOpponent == 1){
-            playerScore++;
-            GameData.getInstance().addTotalWins(originalName, playerScore);
-            GameData.getInstance().startNewGame(opponentName, originalName, opponentMoves, playerMoves);
-            SpecificStats.getInstance().addPlayerWins(originalName, opponentName);
-        } else if (drawPlayerOpponent == 2) {
-            opponentScore++;
-            GameData.getInstance().addTotalWins(opponentName, opponentScore);
-            GameData.getInstance().startNewGame(opponentName, originalName, opponentMoves, playerMoves);
-        } else if (drawPlayerOpponent == 3) {
-            System.out.println("DRAW : " + playerWins + "-" + opponentWins);
-            GameData.getInstance().startNewGame(opponentName, originalName, opponentMoves, playerMoves);
-            GameData.getInstance().addTotalWins("Draw".toUpperCase(), 0);
+    private void gameRules(Move playerMove, Move opponentMove) {
+        if (playerMove.equals(opponentMove)) {
+            System.out.println("Draw");
+        } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
+                (playerMove == Move.PAPER && opponentMove == Move.ROCK) ||
+                (playerMove == Move.SCISSOR && opponentMove == Move.PAPER)) {
+            playerWins++;
+        } else if ((opponentMove == Move.ROCK && playerMove == Move.SCISSOR) ||
+                (opponentMove == Move.PAPER && playerMove == Move.ROCK) ||
+                (opponentMove == Move.SCISSOR && playerMove == Move.PAPER)) {
+            opponentWins++;
         }
     }
 }

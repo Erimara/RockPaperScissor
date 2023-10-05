@@ -3,9 +3,8 @@ package org.example.entities.opponent;
 import org.example.moves.Move;
 
 public class Namnis implements Opponent {
-
     private String name;
-private Opponent move;
+    private Opponent move;
     public Namnis(String name, Opponent move) {
         this.name = name;
         this.move = move;

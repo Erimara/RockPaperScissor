@@ -21,7 +21,6 @@ public class GameData implements IGameData {
     public void addTotalWins(String name, int score) {
         totalWins.computeIfAbsent(name, x -> new ArrayList<>()).add(score);
     }
-
     public void startNewGame(String opponentName, String playerName, List<Move> opponentMoves, List<Move> playerMoves) {
         HashMap<String, List<Move>> newGameHistory = new HashMap<>();
         newGameHistory.put(opponentName, opponentMoves);
@@ -29,7 +28,6 @@ public class GameData implements IGameData {
         gameHistory.add(newGameHistory);
         currentMatchDates.add(LocalDateTime.now());
     }
-
     @Override
     public List<LocalDateTime>  getCurrentMatchDate(){
         return currentMatchDates;
