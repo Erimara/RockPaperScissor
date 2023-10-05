@@ -1,7 +1,5 @@
 package org.example.logic;
 
-import org.example.data.GameData;
-import org.example.data.SpecificStats;
 import org.example.entities.player.PlayerName;
 import org.example.entities.opponent.Opponent;
 import org.example.entities.player.PlayerMoves;
@@ -17,8 +15,8 @@ public class RockPaperScissor {
     private final PlayerName currentPlayerName;
     private int opponentWins = 0;
     private int playerWins = 0;
-    private final List<Move> playerMoves = new ArrayList<>();
-    private final List<Move> opponentMoves = new ArrayList<>();
+    private List<Move> playerMoves = new ArrayList<>();
+    private List<Move> opponentMoves = new ArrayList<>();
     private String originalName = ""; // Saves original name to history/stats
     public RockPaperScissor(Opponent opponent, PlayerMoves currentPlayer, PlayerName currentPlayerName) {
         this.opponent = opponent;
@@ -27,23 +25,32 @@ public class RockPaperScissor {
     }
     private void chooseMove() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("""
-                Make your move!
-                1: Rock
-                2: Paper
-                3: Scissor""");
-        int choice = scanner.nextInt();
-
-        Move playerMove = currentPlayer.doMove(choice);
+        boolean validInput = false;
+        Move playerMove = null;
+        int choice;
+        while (!validInput) {
+            System.out.println("""
+                    Make your move!
+                    1: Rock
+                    2: Paper
+                    3: Scissor""");
+            choice = scanner.nextInt();
+            if (choice >= 1 && choice <= 3) {
+                playerMove = currentPlayer.doMove(choice);
+                validInput = true;
+            } else {
+                System.out.println("Invalid choice. Please choose a valid option");
+            }
+        }
         Move opponentMove = opponent.doMove();
         opponentMoves.add(opponentMove);
         playerMoves.add(playerMove);
 
-        gameRules(playerMove,opponentMove);
+        gameRules(playerMove, opponentMove);
     }
     public void setRounds() {
         Scanner scanner = new Scanner(System.in);
-        originalName = currentPlayerName.getName();;
+        originalName = currentPlayerName.getName();
 
         System.out.println("How many rounds would you like to play?");
         int numOfRounds = scanner.nextInt();
@@ -75,6 +82,7 @@ public class RockPaperScissor {
         }
     }
     private void gameRules(Move playerMove, Move opponentMove) {
+        if (playerMove != null) {
         if (playerMove.equals(opponentMove)) {
             System.out.println("Draw");
         } else if ((playerMove == Move.ROCK && opponentMove == Move.SCISSOR) ||
@@ -86,5 +94,6 @@ public class RockPaperScissor {
                 (opponentMove == Move.SCISSOR && playerMove == Move.PAPER)) {
             opponentWins++;
         }
+    }
     }
 }

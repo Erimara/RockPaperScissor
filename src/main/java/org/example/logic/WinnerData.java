@@ -33,12 +33,12 @@ public class WinnerData {
         int opponentScore = 0;
 
         if (opponentWins > playerWins) {
-            System.out.println("Computer wins: " + opponentWins + "-" + playerWins);
+            System.out.println(opponentName + " wins: " + opponentWins + "-" + playerWins);
             addData(2, playerScore,  opponentScore,  opponentName);
             ReturnToMenu.returnToMainMenu();
         }
         if (playerWins > opponentWins) {
-            System.out.println("Player wins: " + playerWins + "-" + opponentWins);
+            System.out.println(originalName + " wins: " + playerWins + "-" + opponentWins);
             addData(1, playerScore,  opponentScore,  opponentName);
             ReturnToMenu.returnToMainMenu();
         }

@@ -24,16 +24,18 @@ Genom encapsulation har jag också kunnat arbeta mer med abstraction. Abstractio
 Konkret har jag gjort detta genom att bryta ut metoder till mindre metoder som kallar på varandra. Ett annat konkret exempel är
 att jag har brutit ut beteenden i en klass till flera klasser för att ytterligare abstrahera.
 Likt normalisering i relationella databaser så kan detta göras för simplifiera(abstrahera) metoder, vilket både gör det mer
-läsbart och trevligare att läsa. 
+läsbart och lättare att förstå. 
 
 #### Polymorphism
-Polymorphism, vilket jag anser vara den viktigaste principen i detta projekt, handlar om att vi kan anta flera olika former utifrån en specifik.
+Polymorphism, vilket jag anser vara den viktigaste principen i detta projekt, handlar om att vi kan anta flera olika former utifrån en specifik form.
 
-I mitt fall har detta inneburit att koda mot interfaces. Det mest konkreta exemplet är mitt interface "OpponentMethods",
-vilket för att ha samma metoder för tre olika klasser. Genom detta interfacet kan jag sedan kalla på "samma metod" fast med olika
-beteenden. Polymorphism är även centralt för strategy pattern vilket är ett av de pattern jag har inkluderat i projektet.
+I mitt fall har detta inneburit att koda mot interfaces. Det mest konkreta exemplet är mitt interface "Opponent",
+som används för att ha samma metoder fast för tre olika klasser. Genom detta interfacet kan jag sedan kalla på "samma metod" fast implementera
+olika beteenden. 
+
+Polymorphism är även centralt för strategy pattern vilket är ett av de pattern jag har inkluderat i projektet.
 #### Inheritance
-Inheritence är handlar om hur någonting ärvs. I detta fallet handlar det om hur klasser kan ärva från varandra, vilket gör att
+Inheritence handlar om hur någonting ärvs. I detta fallet handlar det om hur klasser kan ärva från varandra, vilket gör att
 de kan implementera samma fält och metoder som föräldraklassen har. 
 
 I mitt fall har jag inte använt mig av inheritence då mina klasser inte ärver från något annat än interfaces. 
@@ -46,12 +48,14 @@ Om jag så skulle vilja lägga till ytterligare en motståndare så kan jag bygg
 Detta skapar även tillgänglighet för ett team att kunna arbeta i samma program utan att det krockar.
 
 När det gäller nackdelar har jag svårt att se många med OOP, mestadels på grund av att jag inte provat på andra sätt att programmera på.
-Däremot finns det en sak jag har tänkt mycket på, och det är minne. När man gång på gång instansierar nya objekt så tänker jag att det kan ta på minnet.
-I Java OOP så krävs detta dock, vilket jag tänker kan skapa problem om man inte är familiär med minneshantering. 
+Det finns två saker jag har tänkt på, det första är minneshantering.
+I Java OOP krävs det att du instansierar nya objekt för att kunna använda dess metoder.
+Detta kan snabbt bli ett problem i större program om man inte är familiär med minneshantering.
 
-En annan sak jag också tänkt på är att det säkerligen kan bli otroligt komplex om man inte har utmärkt förståelse för vad OOP är,
+
+Det andra jag tänkt på är att det säkerligen kan bli otroligt komplex om man inte har utmärkt förståelse för vad OOP är,
 innan man börjar bygga sitt program. OOP som felanvänds i stora program på tusentals rader kod kommer säkerligen stjälpa mer än att hjälpa
-programmeraren.
+utvecklaren.
 
 ### Strategy pattern och andra patterns
 Strategy pattern handlar om att du har ett flertal olika strategier för att exekvera din kod. 
@@ -67,11 +71,14 @@ motståndare från allOpponents klassen. På detta vis kan jag implementera nya 
 
 Ett annat designpattern jag hade kunnat nyttja om programmet skulle vara större hade varit factorypattern. Om jag hade skapat flera hundra olika entiteter
 hade det varit lättare att implementera detta mönstret för. Anledningen till varför det hade varit bra är att jag då hade kunnat använda
-mig av inheritence genom att skapa en huvudklass t ex "Entity" och sedan skapa subklasser som kan förändra vilket typ av objekt som ska skapas. 
+mig av inheritence genom att skapa en huvudklass t ex "Entity" och sedan skapa subklasser som kan förändra vilket typ av objekt som ska skapas.
+
+Factory pattern hade dock ändå kunnat fungera på denna nivå. Detta med anledning av att motståndarnas beteende
+ska vara samma hela tiden. Till exempel så ska Klockis ha klockis beteende.
 
 I början av projektet tänkte jag även på hur Command pattern hade kunnat användas
-Det exemple jag kom på var att om en klass "Move" hade kunnat ha "Rock", "Paper", "Scissor" och med
-logik hade respektive val kunnat kallas på. Det kändes däremot mer rörigt än att använda strategy, vilket gjorde att jag tänkte om.
+Det enda exempel jag kunde rättfärdiga var att om en klass "Move" hade kunnat ha "Rock", "Paper", "Scissor" och med
+logik hade respektive val kunnat kallas på, i samma fil, vilket då hade varit RockPaperScissor filen. Det kändes däremot mer rörigt än att använda strategy, vilket gjorde att jag tänkte om.
 
 ### SOLID
 #### Single Responsibility Principle
@@ -114,3 +121,10 @@ Detta är något jag har uppnått någorlunda då jag har försökt abstrahera s
 
 
 ### Avslutande tankar
+
+Avslutande vill jag säga att det har varit ett kul projekt där vi fått leka runder mycket med OOP och dess principer.
+När vi nu bygger så små program tror jag inte att det gör jättestor skillnad, förutom att det blir lättare att läsa koden.
+
+När vi väl kommer börja arbeta på större projekt som har mycket större kodbaser kan jag tänka mig att OOP kan spela en stor roll.
+
+PS. Jag har använt streams i klasserna History och SpecificStats.

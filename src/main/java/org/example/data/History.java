@@ -18,10 +18,10 @@ public class History {
                                HashMap<String, List<Integer>> totalWins
                                ) {
         IntStream.range(0, gameHistory.size())
-                .forEach(matchNumber -> {
-                    System.out.println("GAME: " + (matchNumber + 1));
-                    System.out.println("DATE: " + currentMatchDates.get(matchNumber) );
-                    System.out.println("USED MOVES: " + gameHistory.get(matchNumber));
+                .forEach(match -> {
+                    System.out.println("GAME: " + (match + 1));
+                    System.out.println("DATE: " + currentMatchDates.get(match) );
+                    System.out.println("USED MOVES: " + gameHistory.get(match));
                 });
         System.out.println();
         displayWinners(totalWins);

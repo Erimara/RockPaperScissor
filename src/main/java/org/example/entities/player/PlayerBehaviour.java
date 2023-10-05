@@ -15,6 +15,8 @@ public class PlayerBehaviour implements PlayerMoves {
             } else if (move == 3) {
                 System.out.println(name + " used " + Move.SCISSOR);
                 return Move.SCISSOR;
+            } else {
+                System.out.println("non eligible move");
             }
         return null;
     }
