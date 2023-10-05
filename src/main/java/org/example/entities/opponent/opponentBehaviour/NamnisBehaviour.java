@@ -9,17 +9,21 @@ import org.example.menu.StartGame;
 import org.example.moves.Move;
 
 public class NamnisBehaviour implements Opponent {
-    private int callCount = 0;
     @Override
     public Move doMove() {
-        String opponentName = AllOpponents.getInstance().getOpponents().get(1).getName();
         String playerName = HandlePlayer.getInstance().getCurrentPlayer().getName();
-        callCount++;
-        if (playerName.length() < 6) {
+        String opponentName = getName();
+        changeName(playerName);
+        System.out.println(opponentName + " changed your name");
+
+        if (playerName.length() < 5) {
             System.out.println(opponentName + " used " + Move.ROCK);
             return Move.ROCK;
-
         } else if (playerName.startsWith("s") || playerName.endsWith("s")) {
+            if (playerName.endsWith("e")){
+                System.out.println(opponentName + " used " + Move.ROCK);
+                return Move.ROCK;
+            }
             System.out.println(opponentName + " used " + Move.PAPER);
             return Move.PAPER;
 
@@ -31,11 +35,7 @@ public class NamnisBehaviour implements Opponent {
             System.out.println(opponentName + " used " + Move.SCISSOR);
             return Move.SCISSOR;
 
-        } else {
-            System.out.println(opponentName + " changed your name");
-            changeName(playerName);
         }
-
         return Move.SCISSOR;
 
     }
@@ -53,6 +53,6 @@ public class NamnisBehaviour implements Opponent {
 
     @Override
     public String getName() {
-        return null;
+        return AllOpponents.getInstance().getOpponents().get(1).getName();
     }
 }
